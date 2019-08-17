@@ -1,0 +1,62 @@
+<html>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+
+$( document ).ready(function() {
+
+    $("#odometer").click(function(event){
+        event.preventDefault();
+        processuploadedimage();
+
+    });
+
+console.log( "ready!" );
+});
+
+        function processuploadedimage(){
+            debugger; 
+            
+            var fileInput = document.getElementById('uplodometerimage');
+            var file = fileInput.files[0];
+            
+            var form = new FormData();
+            form.append("Image", file);
+            var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://bagic.wimwisure.com/odometer-image-classifier",
+            "method": "POST",
+            "processData": false,
+            "contentType": false,
+            "mimeType": "multipart/form-data",
+            "data": form
+            }
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                alert(response);
+            }).fail(function (jqXHR, textStatus) {
+                console.log(response);
+            });
+
+         
+        }
+    </script>
+    <body>
+        <span>odometer scan!</span>
+        
+            <form method="post" action="">
+                    <div class="form-group">
+            <!-- <label for="files" style="color:#fff">Upload car photo</label>
+          <input name="uplimage" id="uplimage" type="file" placeholder="Upload image" class="form-control"><br> -->
+          <input name="uplodometerimage" id="uplodometerimage" type="file" placeholder="Upload Odometer image" class="form-control">
+          <label for="files" style="color:#fff">Upload odometer photo</label>
+                    </div>
+                    <div class="form-group">
+          <!-- <button id="submit" type='submit'   class="btn btn-primary btn-block">Submit</button> -->
+          <button id="odometer" class="btn btn-primary btn-block" >Odometer Submit</button>
+                    </div>
+                    <div id="messageBox" class="alert alert-warning" role="alert" style="display: none;">Generating Results. Please wait!</div>
+                </form>
+    </body>
+</html>
