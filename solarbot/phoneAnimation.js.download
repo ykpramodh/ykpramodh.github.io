@@ -1,0 +1,39 @@
+
+// Homepage animation
+// TODO: the message loading logic here can be separated out from the scroll logic for reusability outside of the phone frame.
+
+jQuery(document).ready(function($) {
+    var loadingDelay = 0;
+
+    var screen = $("#phone-screen");
+
+    var messages = $("#convo-animation").children();
+    var loading = $("#convo-loading");
+
+    messages.hide();
+
+    var loadingDelay = 0;
+
+    messages.each( function(index, message) {
+        setTimeout(function(){
+
+            if(message.id !== 'convo-loading') {
+                message = $(message);
+                
+                //User Messages should show loading animation first
+                if(message.hasClass('convo-bot')) {
+                    loading.fadeOut(200);
+                    loadMessage(message, screen);
+                } else {
+                    loadMessage(message, screen);
+                    loading.delay(1000).fadeIn(300, function() { scrollDown(screen) })
+                }
+            }            
+        }, 3000 * index);
+    });
+});
+
+
+function loadMessage(message, screen) { message.slideDown(300,  function() { scrollDown(screen) }); }
+
+function scrollDown(screenWindow) { screenWindow[0].scrollTo({top: screenWindow[0].scrollHeight, behavior: 'smooth'}); }
